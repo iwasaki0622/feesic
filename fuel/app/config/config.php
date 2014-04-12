@@ -49,13 +49,13 @@ return array(
 	/**
 	 * Default location for the file cache
 	 */
-	// 'cache_dir'       => APPPATH.'cache/',
+	'cache_dir'       => APPPATH.'cache/',
 
 	/**
 	 * Settings for the file finder cache (the Cache class has it's own config!)
 	 */
-	// 'caching'         => false,
-	// 'cache_lifetime'  => 3600, // In Seconds
+	'caching'         => true,
+	'cache_lifetime'  => 3600, // In Seconds
 
 	/**
 	 * Callback to use with ob_start(), set this to 'ob_gzhandler' for gzip encoding of output
@@ -78,14 +78,14 @@ return array(
 	/**
 	 * Localization & internationalization settings
 	 */
-	// 'language'           => 'en', // Default language
-	// 'language_fallback'  => 'en', // Fallback language when file isn't available for default language
-	// 'locale'             => 'en_US', // PHP set_locale() setting, null to not set
+	'language'           => 'ja', // Default language
+	'language_fallback'  => 'ja', // Fallback language when file isn't available for default language
+	'locale'             => 'ja_JP', // PHP set_locale() setting, null to not set
 
 	/**
 	 * Internal string encoding charset
 	 */
-	// 'encoding'  => 'UTF-8',
+	'encoding'  => 'UTF-8',
 
 	/**
 	 * DateTime settings

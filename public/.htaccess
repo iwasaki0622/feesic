@@ -54,3 +54,4 @@
 	</IfModule>
 
 </IfModule>
+SetEnv FUEL_ENV production
