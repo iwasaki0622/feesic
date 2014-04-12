@@ -34,10 +34,8 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
         $feeling = $feelingClass->analyzeFeeling($motion, $sound);
 
-        // echo json_encode($feeling);
-
         $data = array(
-            'uid' => 'fejwofa',
+            'uid' => 'hoge',
             'motion' => $motion,
             'sound' => $sound,
             'lat' => $lat,
