@@ -6,6 +6,7 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
     public function get_index()
     {
+
         $feeling = Model_Feeling::findByUidAndAccount("hoge", "1");
 
         header("Access-Control-Allow-Origin: *");
