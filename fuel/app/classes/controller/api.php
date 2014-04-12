@@ -6,10 +6,10 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
     public function get_index()
     {
-        $feeling = Model_Feeling::find_by("uid", "hoge");
+        $feeling = Model_Feeling::findByUidAndAccount("hoge", "1");
 
         header("Access-Control-Allow-Origin: *");
-        $this->response($feeling[0]['youtube_json']);
+        $this->response($feeling);
     }
 
     public function post_index()
