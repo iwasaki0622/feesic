@@ -116,9 +116,12 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
 
             if(!empty($youtubeJson)) {
+                echo $songName."<br>";
+                echo $artistName."<br>";
                 break;
             }
         }
+
 
         $data = array(
             'uid' => "",
