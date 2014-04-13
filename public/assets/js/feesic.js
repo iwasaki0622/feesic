@@ -13,7 +13,7 @@ function Feesic()
     self.setupEventListeners = function setupEventListeners()
     {
         var timer;
-        var timeout = 5000;
+        var timeout = 500000;
         // 動画ボックスがあれば、タイマーを起動し、動画を読み込む
         if($("#youtube").length != 0){
             self.getYoutube();
@@ -32,12 +32,12 @@ function Feesic()
             async: true,
             type: "GET",
             url: api_url,
-            data: null,
+            data: "uid=hoge",
             dataType: "json",
             success: function(data, textStatus)
             {
                 // JSONをParseしてIDを取得
-                var obj = jQuery.parseJSON( data);
+                var obj = jQuery.parseJSON(data.youtube_json);
                 // 0個目のIDを取得する
                 var track = new Array(obj.data.items[0].id);
 
