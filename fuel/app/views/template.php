@@ -41,6 +41,13 @@
 <body>
     
     <?php echo $content ?>
+    
+    <div class="row" style=" border-top: 1px dotted #CCCCCC; margin-top: 30px;">
+        <p>&copy; Term Gomez. Tech Crunch 2014 Osaka Hackathon.<br />
+            Powered by <a href="https://developer.gracenote.com/rhythm-api">Gracenote Rhythm API</a>, also uses <a href="https://developers.google.com/youtube/iframe_api_reference?hl=ja">YouTube API</a>. <a href="https://github.com/iwasaki0622/feesic">Code on GitHub.</a> <br />
+            Image Presents by paylessimages,Inc.All Right Reserved.
+        </p>
+    </div>
 
 	<!-- Grab Google CDN's jQuery, fall back to local if offline -->
 	<!-- 2.0 for modern browsers, 1.10 for .oldie -->
@@ -88,7 +95,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
 	<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
 	<![endif]-->
-
+    
   </body>
 </html>
 
