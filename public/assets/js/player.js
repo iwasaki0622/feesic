@@ -28,6 +28,7 @@ function Player(data)
             height: '250',
             width: '300',
             videoId: self.track,
+            playerVars: { 'autoplay': 1},
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -44,7 +45,7 @@ function Player(data)
     onPlayerStateChange = function(event) {
         // 再生が終わったら、alertしてみます
         if (event.data == YT.PlayerState.ENDED) {
-            alert('finish');
+            console.log('finish');
         }
     }
 
@@ -71,10 +72,17 @@ function Player(data)
         return self.player.getPlayerState();
     }
     
+    self.playVideo = function() {
+        self.player.playVideo();
+    }
+    
     self.refreshVideo = function() {
-        self.player.stopVideo();
-        self.player.clearVideo();
-        self.player.loadVideoById(self.track);
+//        self.player.stopVideo();
+//        self.player.clearVideo();
+        console.log(self.track);
+        self.player.loadVideoById(self.track[0]);
+//        self.player.loadVideoById("XAdBNPQ77Ig");
+//        self.player.playVideo();
     }
 
     self._construct(data);

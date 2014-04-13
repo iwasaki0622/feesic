@@ -21,15 +21,16 @@ function Feesic()
         if($("#youtube").length != 0){
             self.getYoutube();
             timer = $.timer(timeout, function() {
+                console.log("reload");
+                console.log(self.ytplayer.getStatus());
                 if(self.ytplayer.getStatus() == 2 || self.ytplayer.getStatus() == 0) {
-                    self.getYoutube();
-                    self.ytplayer.refreshVideo();
+                    self.getYoutube(1);
                 }
             });
         }
     }
     
-    self.getYoutube = function() {
+    self.getYoutube = function(is_reload) {
         var api_url = "http://feesic.cloudapp.net/api/";
         // APIにアクセスして動画を取得
         jQuery.ajax(
@@ -45,11 +46,32 @@ function Feesic()
                 var obj = jQuery.parseJSON(data.youtube_json);
                 // 0個目のIDを取得する
                 var track = new Array(obj.data.items[0].id);
-                var feeling = data.feeling_type;
-                console.log(data);
+                var feeling = "";
+                var feeling_type_id = data.feeling_type_id;
+                switch(feeling_type_id) {
+                    case "1": 
+                        feeling = "喜んでいます"; 
+                        feeling_description = "嬉しそうに声をあげています。";
+                        break;
+                    case "2": 
+                        feeling = "怒っています"; 
+                        feeling_description = "声をあげてジタバタと動いています。";
+                        break;
+                    case "3": 
+                        feeling = "悲しんでいます"; 
+                        feeling_description = "声も動きも少なく哀しそうです。";
+                        break;
+                    case "4": 
+                        feeling = "楽しんでいます"; 
+                        feeling_description = "楽しそうに動きまわっています。";
+                        break;
+                }
                 $("#feel-type").text(feeling);
-                console.log(track);
+                $("#feel-type-description").text(feeling_description);
                 self.ytplayer.setTrack(track);
+                if(is_reload) { 
+                    self.ytplayer.refreshVideo();
+                }
 
                 // Trigger the callback
                 if (typeof callback == "function") { callback(); }

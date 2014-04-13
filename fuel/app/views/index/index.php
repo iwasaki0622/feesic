@@ -36,13 +36,13 @@
             <div class="row">
                 <div class="twelve columns">
                     <div class="row">
-                        <div class="three columns image circle">
+                        <div class="six columns image medium circle">
 						<?php echo Asset::img("user001.jpg"); ?>
                         </div>
-                        <div class="nine columns">
-                            <h4 class="lead">リード</h4>
+                        <div class="six columns">
+                            <h4 class="lead" id="feel-type"></h4>
                             <ul class="square">
-                                <li id="feel-type"></li>
+                                <li id="feel-type-description"></li>
                             </ul>
                             <div id="youtube"></div>
                         </div>
