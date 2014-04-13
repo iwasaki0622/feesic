@@ -122,7 +122,6 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             }
         }
 
-
         $data = array(
             'uid' => "",
             'gracenote_json' => $gracenoteResponse['JSON'],

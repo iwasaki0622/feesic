@@ -9,7 +9,7 @@ class Model_Feeling extends \Fuel\Core\Model_Crud {
     protected static $_primary_key = "feeling_id";
 
     public static function findByUidAndAccount($uid, $account) {
-        $sql = "select feeling_id, feeling_type, youtube_json from feeling inner join gadget using(uid) inner join feeling_type using(feeling_type_id) where uid = :uid and account_id = :account order by feeling_id desc";
+        $sql = "select feeling_id, feeling_type_id, feeling_type, youtube_json from feeling inner join gadget using(uid) inner join feeling_type using(feeling_type_id) where uid = :uid and account_id = :account order by feeling_id desc";
         $query = \DB::query($sql);
         $query->param("uid", $uid);
         $query->param("account", $account);
