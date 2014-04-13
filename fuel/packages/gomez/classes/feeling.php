@@ -47,25 +47,40 @@ class Gomez_Feeling {
 	}
 
 
-    /**
-     * マートン級の活躍でグレースノートを検索する
-     * @param $felingTypeId
-     * @return string
-     */
-    static function murton($felingTypeId) {
-        $gracenoteJson = "";
+	    /**
+	     * マートン級の活躍でグレースノートを検索する
+	     * @param $felingTypeId
+	     * @return string
+	     */
+	    static function murton($felingTypeId) {
+	        $gracenoteJson = "";
 
-        return $gracenoteJson;
-    }
+	        return $gracenoteJson;
+	    }
 
-    /**
-     * 福留程度の機能
-     * @param $songName
-     * @return string
-     */
-    static function fukudome($songName) {
-        $youtubeJson = "";
+	    /**
+	     * 福留程度の機能
+	     * youtube_jsonを保存する
+	     * @param $songName
+	     * @return string
+	     */
+	    static function fukudome($songName) {
 
-        return $youtubeJson;
-    }
+	    //スペースは+に変える
+	    $songName = str_replace(" ", "+", $songName);
+
+	    $url = "http://gdata.youtube.com/feeds/api/videos?vq=" . $songName . "&max-results=10&v=2&alt=jsonc";
+	    $youtubeJson = file_get_contents($url);
+
+	    $res = json_decode($youtubeJson);
+	    $totalItems = $res->data->totalItems;
+
+	   if($totalItems !== 0) {
+	   	return $youtubeJson;
+	   } else {
+	   	return null;
+	   }
+
+
+	    }
 }

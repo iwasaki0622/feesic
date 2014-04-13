@@ -43,12 +43,18 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             'lon' => $lon,
         );
         $action_log = Model_ActionLog::forge($data);
-        $action_log->save();
+        // $action_log->save();
 
-        $gracenoteJson = Gomez_Feeling::murton($feelingTypeId);
-        $songName = $gracenoteJson['hogehogeh'];
+        $youtubeJson = null;
+        // 検索して,なかったら、次の曲を検索する
+        while($youtubeJson == null) {
 
-        $youtubeJson = Gomez_Feeling::fukudome($songName);
+             $gracenoteJson = Gomez_Feeling::murton($feelingTypeId);
+             $songName = "fjaewpifjawo;ejgaeoigjaer;oigj;";
+             $youtubeJson = Gomez_Feeling::fukudome($songName);
+
+        }
+
 
         $data = array(
             'uid' => $uid,
