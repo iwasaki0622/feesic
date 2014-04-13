@@ -6,8 +6,9 @@ class Gomez_Feeling {
 
     // ムードとかの対応
     private static $MOOD_ARRAY = array(
-        1 => array(
+        4 => array(
             65322,  // ピースフル
+            42961,  // パワー
         ),
         2 => array(
             42958,  // アグレッシヴ
@@ -15,9 +16,6 @@ class Gomez_Feeling {
         3 => array(
             65328,  // シリアス
         ),
-        4 => array(
-            42961,  // パワー
-        )
 /*
         1 => array(
             65322,  // ピースフル
@@ -92,24 +90,19 @@ class Gomez_Feeling {
 
         $feeling = Model_FeelingType::find_all();
 
-        if($motion <= 200 && $sound > -10 {
+        if($motion >= 200) {
 
-            return $feeling[0]['feeling_type_id'];	//喜
+        	return $feeling[3]['feeling_type_id'];	//楽
 
         }
-        else if($motion > 200 && $sound > -10) {
+        else if($sound > -10) {
 
             return $feeling[1]['feeling_type_id'];	//怒
 
         }
-        else if($motion <= 200 && $sound <= -10) {
+        else {
 
             return $feeling[2]['feeling_type_id'];	//哀
-
-        }
-        else if($motion > 200 && $sound <= -10) {
-
-            return $feeling[3]['feeling_type_id'];	//楽
 
         }
 
