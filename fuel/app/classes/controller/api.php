@@ -45,14 +45,25 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
         $action_log = Model_ActionLog::forge($data);
         $action_log->save();
 
-        $gracenoteJson = Gomez_Feeling::murton($feelingTypeId);
-        $songName = $gracenoteJson['hogehogeh'];
+        $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
+        $gracenoteData = $gracenoteResponse['RESPONSE'];
+        foreach((array)$gracenoteData->ALBUM as $data) {
+            $song = $data->TITLE;
+            $songName = $song[0]->VALUE;
 
-        $youtubeJson = Gomez_Feeling::fukudome($songName);
+            $artist = $data->ARTIST;
+            $artistName = $artist[0]->VALUE;
+
+            $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
+
+            if(!empty($youtubeJson)) {
+                break;
+            }
+        }
 
         $data = array(
             'uid' => $uid,
-            'gracenote_json' => $gracenoteJson,
+            'gracenote_json' => $gracenoteResponse['JSON'],
             'feeling_type_id' => $feelingTypeId,
             'youtube_json' => $youtubeJson,
         );
@@ -62,5 +73,33 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
         header("Access-Control-Allow-Origin: *");
         $this->response($action_log);
+    }
+
+    function action_test (){
+        $feelingTypeId = 1;
+        $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
+        $gracenoteData = $gracenoteResponse['RESPONSE'];
+        foreach((array)$gracenoteData->ALBUM as $data) {
+            $song = $data->TITLE;
+            $songName = $song[0]->VALUE;
+
+            $artist = $data->ARTIST;
+            $artistName = $artist[0]->VALUE;
+
+            $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
+echo $youtubeJson."<br>";
+            if(!empty($youtubeJson)) {
+                break;
+            }
+        }
+
+        $data = array(
+            'uid' => "",
+            'gracenote_json' => $gracenoteResponse['JSON'],
+            'feeling_type_id' => $feelingTypeId,
+            'youtube_json' => $youtubeJson,
+        );
+        echo "<pre>";
+        print_r($data);
     }
 }

@@ -4,6 +4,44 @@ class Gomez_Feeling {
 
 	private static $instance;
 
+    // ムードとかの対応
+    private static $MOOD_ARRAY = array(
+        1 => array(
+            65322,  // ピースフル
+            65323,  // ロマンティック
+            65324,  // センチメンタル
+            42942,  // ソフト
+            42946,  // のんびり
+            65325,  // サウダージ
+            42954,  // エレガント
+            42947,  // セクシー
+            65326,  // クール
+        ),
+        2 => array(
+            65327,  // タフ
+            42948,  // ダーク
+            42949,  // メランコリー
+            65328,  // シリアス
+            65329,  // モヤモヤ
+            42953,  // パッション
+            42955,  // ソワソワ
+        ),
+        3 => array(
+            42951,  // ワイルド
+            42958,  // アグレッシヴ
+            65330,  // 骨太
+            42960,  // エキサイティング
+        ),
+        4 => array(
+            42961,  // パワー
+            42945,  // クライマックス
+            65331,  // 壮快
+            65332,  // 元気
+            65333,  // アップビート"
+        )
+    );
+
+
 	/**
 	* インスタンスを取得する
 	* @return Gomez_Feeling
@@ -49,13 +87,19 @@ class Gomez_Feeling {
 
     /**
      * マートン級の活躍でグレースノートを検索する
-     * @param $felingTypeId
+     * @param $feelingTypeId
      * @return string
      */
-    static function murton($felingTypeId) {
-        $gracenoteJson = "";
+    static function murton($feelingTypeId) {
+        $mood = array_rand(self::$MOOD_ARRAY[$feelingTypeId]);
+        $url = Config::get("gracenote_api") . $mood;
+        $gracenoteJson = file_get_contents($url, "r");
 
-        return $gracenoteJson;
+        $tmp = json_decode($gracenoteJson)->RESPONSE;
+        $gracenoteArray['RESPONSE'] = $tmp[0];
+        $gracenoteArray['JSON'] = $gracenoteJson;
+
+        return $gracenoteArray;
     }
 
     /**
