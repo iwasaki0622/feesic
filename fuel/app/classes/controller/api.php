@@ -43,8 +43,9 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             'lon' => $lon,
         );
         $action_log = Model_ActionLog::forge($data);
-        $action_log->save();
+        // $action_log->save();
 
+<<<<<<< HEAD
         $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
         $gracenoteData = $gracenoteResponse['RESPONSE'];
         foreach((array)$gracenoteData->ALBUM as $data) {
@@ -60,6 +61,18 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
                 break;
             }
         }
+=======
+        $youtubeJson = null;
+        // 検索して,なかったら、次の曲を検索する
+        while($youtubeJson == null) {
+
+             $gracenoteJson = Gomez_Feeling::murton($feelingTypeId);
+             $songName = "fjaewpifjawo;ejgaeoigjaer;oigj;";
+             $youtubeJson = Gomez_Feeling::fukudome($songName);
+
+        }
+
+>>>>>>> 29fac8fe2b103aac4d5e3b2f5ae05363f760da7a
 
         $data = array(
             'uid' => $uid,
@@ -74,6 +87,7 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
         header("Access-Control-Allow-Origin: *");
         $this->response($action_log);
     }
+<<<<<<< HEAD
 
     function action_test (){
         $feelingTypeId = 1;
@@ -103,3 +117,6 @@ echo $youtubeJson."<br>";
         print_r($data);
     }
 }
+=======
+}
+>>>>>>> 29fac8fe2b103aac4d5e3b2f5ae05363f760da7a

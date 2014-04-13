@@ -2,7 +2,7 @@
 
 class Gomez_Feeling {
 
-	private static $instance;
+    private static $instance;
 
     // ムードとかの対応
     private static $MOOD_ARRAY = array(
@@ -42,47 +42,47 @@ class Gomez_Feeling {
     );
 
 
-	/**
-	* インスタンスを取得する
-	* @return Gomez_Feeling
-	*/
-	public static function getInstance() {
-		if (empty(self::$instance)) {
-			self::$instance = new Gomez_Feeling();
-		}
+    /**
+     * インスタンスを取得する
+     * @return Gomez_Feeling
+     */
+    public static function getInstance() {
+        if (empty(self::$instance)) {
+            self::$instance = new Gomez_Feeling();
+        }
 
-		return self::$instance;
-	}
-	
-	/**
-	* 久慈の様な動きと音声によって感情を分析する
-	*/
-	function kuji($motion, $sound) {
+        return self::$instance;
+    }
 
-		$feeling = Model_FeelingType::find_all();
+    /**
+     * 久慈の様な動きと音声によって感情を分析する
+     */
+    function kuji($motion, $sound) {
 
-		if($motion <= 50 && $sound > 50) {
+        $feeling = Model_FeelingType::find_all();
 
-			return $feeling[0]['feeling_type_id'];	//喜
+        if($motion <= 50 && $sound > 50) {
 
-		}
-		else if($motion > 50 && $sound > 50) {
+            return $feeling[0]['feeling_type_id'];	//喜
 
-			return $feeling[1]['feeling_type_id'];;	//怒
+        }
+        else if($motion > 50 && $sound > 50) {
 
-		}
-		else if($motion <= 50 && $sound <= 50) {
+            return $feeling[1]['feeling_type_id'];;	//怒
 
-			return $feeling[2]['feeling_type_id'];;	//哀
+        }
+        else if($motion <= 50 && $sound <= 50) {
 
-		}
-		else if($motion > 50 && $sound <= 50) {
+            return $feeling[2]['feeling_type_id'];;	//哀
 
-			return $feeling[3]['feeling_type_id'];;	//楽
+        }
+        else if($motion > 50 && $sound <= 50) {
 
-		}
+            return $feeling[3]['feeling_type_id'];;	//楽
 
-	}
+        }
+
+    }
 
 
     /**
@@ -102,14 +102,28 @@ class Gomez_Feeling {
         return $gracenoteArray;
     }
 
+
     /**
      * 福留程度の機能
+     * youtube_jsonを保存する
      * @param $songName
      * @return string
      */
     static function fukudome($songName) {
-        $youtubeJson = "";
 
-        return $youtubeJson;
+        //スペースは+に変える
+        $songName = str_replace(" ", "+", $songName);
+
+        $url = "http://gdata.youtube.com/feeds/api/videos?vq=" . $songName . "&max-results=10&v=2&alt=jsonc";
+        $youtubeJson = file_get_contents($url);
+
+        $res = json_decode($youtubeJson);
+        $totalItems = $res->data->totalItems;
+
+        if($totalItems !== 0) {
+            return $youtubeJson;
+        } else {
+            return null;
+        }
     }
 }
