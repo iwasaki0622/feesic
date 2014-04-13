@@ -8,6 +8,19 @@ class Gomez_Feeling {
     private static $MOOD_ARRAY = array(
         1 => array(
             65322,  // ピースフル
+        ),
+        2 => array(
+            42958,  // アグレッシヴ
+        ),
+        3 => array(
+            65328,  // シリアス
+        ),
+        4 => array(
+            42961,  // パワー
+        )
+/*
+        1 => array(
+            65322,  // ピースフル
             65323,  // ロマンティック
             65324,  // センチメンタル
             42942,  // ソフト
@@ -39,8 +52,26 @@ class Gomez_Feeling {
             65332,  // 元気
             65333,  // アップビート"
         )
+*/
     );
 
+    private static $GENRE_ARRAY = array(
+        27745,
+        27800,
+        35625,
+        35627,
+        35628,
+        27710,
+        27960,
+        27790,
+        27850,
+        27854,
+        27855,
+        27857,
+        27858,
+        35659,
+
+    );
 
     /**
      * インスタンスを取得する
@@ -68,17 +99,17 @@ class Gomez_Feeling {
         }
         else if($motion > 50 && $sound > 50) {
 
-            return $feeling[1]['feeling_type_id'];;	//怒
+            return $feeling[1]['feeling_type_id'];	//怒
 
         }
         else if($motion <= 50 && $sound <= 50) {
 
-            return $feeling[2]['feeling_type_id'];;	//哀
+            return $feeling[2]['feeling_type_id'];	//哀
 
         }
         else if($motion > 50 && $sound <= 50) {
 
-            return $feeling[3]['feeling_type_id'];;	//楽
+            return $feeling[3]['feeling_type_id'];	//楽
 
         }
 
@@ -92,12 +123,24 @@ class Gomez_Feeling {
      */
     static function murton($feelingTypeId) {
         $mood = array_rand(self::$MOOD_ARRAY[$feelingTypeId]);
-        $url = Config::get("gracenote_api") . $mood;
-        $gracenoteJson = file_get_contents($url, "r");
+        $url = Config::get("gracenote_api") . "mood=" . $mood . "&genre=". array_rand(self::$GENRE_ARRAY);
+        $conn = curl_init();
+        curl_setopt($conn, CURLOPT_URL, $url);
+        curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($conn, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($conn, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($conn, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($conn, CURLOPT_HEADER, false);
 
-        $tmp = json_decode($gracenoteJson)->RESPONSE;
-        $gracenoteArray['RESPONSE'] = $tmp[0];
-        $gracenoteArray['JSON'] = $gracenoteJson;
+        do {
+            $gracenoteJson = json_decode(curl_exec($conn));
+//        $gracenoteJson = file_get_contents($url, "r");
+        } while(!isset($gracenoteJson->RESPONSE) || !isset($gracenoteJson->RESPONSE[0]));
+        curl_close($conn);
+
+        $gracenoteArray['RESPONSE'] = $gracenoteJson->RESPONSE[0];
+        $gracenoteArray['JSON'] = json_encode($gracenoteJson);
 
         return $gracenoteArray;
     }
@@ -126,4 +169,14 @@ class Gomez_Feeling {
             return null;
         }
     }
+
+    /**
+     * ユニコードエスケープされたやつを戻す
+     * @param $string
+     */
+    static function wada($string) {
+        $str = str_replace("\\u", "%u", $string);
+        return preg_replace_callback("/((?:[^\x09\x0A\x0D\x20-\x7E]{3})+)/", "decode_callback", $str);
+    }
+
 }
