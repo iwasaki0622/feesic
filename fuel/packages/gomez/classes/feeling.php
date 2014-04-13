@@ -8,6 +8,19 @@ class Gomez_Feeling {
     private static $MOOD_ARRAY = array(
         1 => array(
             65322,  // ピースフル
+        ),
+        2 => array(
+            42958,  // アグレッシヴ
+        ),
+        3 => array(
+            65328,  // シリアス
+        ),
+        4 => array(
+            42961,  // パワー
+        )
+/*
+        1 => array(
+            65322,  // ピースフル
             65323,  // ロマンティック
             65324,  // センチメンタル
             42942,  // ソフト
@@ -39,6 +52,7 @@ class Gomez_Feeling {
             65332,  // 元気
             65333,  // アップビート"
         )
+*/
     );
 
     private static $GENRE_ARRAY = array(
@@ -120,15 +134,13 @@ class Gomez_Feeling {
         curl_setopt($conn, CURLOPT_HEADER, false);
 
         do {
-            $gracenoteJson = curl_exec($conn);
+            $gracenoteJson = json_decode(curl_exec($conn));
 //        $gracenoteJson = file_get_contents($url, "r");
-        } while(!isset(json_decode($gracenoteJson)->RESPONSE));
+        } while(!isset($gracenoteJson->RESPONSE) || !isset($gracenoteJson->RESPONSE[0]));
         curl_close($conn);
 
-
-        $tmp = json_decode($gracenoteJson)->RESPONSE;
-        $gracenoteArray['RESPONSE'] = $tmp[0];
-        $gracenoteArray['JSON'] = $gracenoteJson;
+        $gracenoteArray['RESPONSE'] = $gracenoteJson->RESPONSE[0];
+        $gracenoteArray['JSON'] = json_encode($gracenoteJson);
 
         return $gracenoteArray;
     }

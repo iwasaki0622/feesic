@@ -16,7 +16,8 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
     public function post_index()
     {
 
-        $uid = Input::post('uid');
+//        $uid = Input::post('uid');
+        $uid = "hoge";
 
         //動き
         $motion = Input::post('motion');
@@ -45,7 +46,17 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
         $action_log = Model_ActionLog::forge($data);
         $action_log->save();
 
-        $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
+        do {
+            $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
+            $gracenoteData = $gracenoteResponse['RESPONSE'];
+
+            if(isset($gracenoteData->STATUS) && $gracenoteData->STATUS == "NO_MATCH") {
+
+            } else {
+                break;
+            }
+        } while(true);
+
         $youtubeJson = null;
         $gracenoteData = $gracenoteResponse['RESPONSE'];
         foreach((array)$gracenoteData->ALBUM as $data) {
@@ -105,9 +116,12 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
 
             if(!empty($youtubeJson)) {
+                echo $songName."<br>";
+                echo $artistName."<br>";
                 break;
             }
         }
+
 
         $data = array(
             'uid' => "",

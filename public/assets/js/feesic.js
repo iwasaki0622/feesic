@@ -2,24 +2,29 @@ function Feesic()
 {
     // Members
     var self = this; // Self-reference
+    var ytplayer = null;
 
     // コンストラクタ
     self._construct = function _construct()
     {
         // リスナーを立ち上げる
         self.setupEventListeners();
+        // Playerをレンダー
+        self.ytplayer = new Player();
     }
 
     self.setupEventListeners = function setupEventListeners()
     {
         var timer;
-        var timeout = 500000;
+        var timeout = 5000;
         // 動画ボックスがあれば、タイマーを起動し、動画を読み込む
         if($("#youtube").length != 0){
             self.getYoutube();
             timer = $.timer(timeout, function() {
-                self.getYoutube();
-    //            alert("Timer completed.<br />");
+                if(self.ytplayer.getStatus() == 2 || self.ytplayer.getStatus() == 0) {
+                    self.getYoutube();
+                    self.ytplayer.refreshVideo();
+                }
             });
         }
     }
@@ -40,10 +45,11 @@ function Feesic()
                 var obj = jQuery.parseJSON(data.youtube_json);
                 // 0個目のIDを取得する
                 var track = new Array(obj.data.items[0].id);
-
-                // Playerをレンダー
-                var player = new Player(track);
-                player.render();
+                var feeling = data.feeling_type;
+                console.log(data);
+                $("#feel-type").text(feeling);
+                console.log(track);
+                self.ytplayer.setTrack(track);
 
                 // Trigger the callback
                 if (typeof callback == "function") { callback(); }
@@ -59,7 +65,6 @@ function Feesic()
             }
         });
     }
-    
     self._construct();
 }
 new Feesic();
