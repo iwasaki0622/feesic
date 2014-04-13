@@ -92,22 +92,22 @@ class Gomez_Feeling {
 
         $feeling = Model_FeelingType::find_all();
 
-        if($motion <= 50 && $sound > 50) {
+        if($motion <= 200 && $sound > -10 {
 
             return $feeling[0]['feeling_type_id'];	//喜
 
         }
-        else if($motion > 50 && $sound > 50) {
+        else if($motion > 200 && $sound > -10) {
 
             return $feeling[1]['feeling_type_id'];	//怒
 
         }
-        else if($motion <= 50 && $sound <= 50) {
+        else if($motion <= 200 && $sound <= -10) {
 
             return $feeling[2]['feeling_type_id'];	//哀
 
         }
-        else if($motion > 50 && $sound <= 50) {
+        else if($motion > 200 && $sound <= -10) {
 
             return $feeling[3]['feeling_type_id'];	//楽
 
