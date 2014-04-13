@@ -75,7 +75,7 @@
 	<?php echo Asset::js('libs/ui/gumby.tabs.js') ?>
 	<?php echo Asset::js('libs/ui/jquery.validation.js') ?>
 	<?php echo Asset::js('libs/gumby.init.js') ?>
-
+    
     <?php echo Asset::js('plugins.js') ?>
     <?php echo Asset::js('main.js') ?>
     <?php echo Asset::js('player.js') ?>
