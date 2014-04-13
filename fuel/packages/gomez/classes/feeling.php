@@ -93,7 +93,17 @@ class Gomez_Feeling {
     static function murton($feelingTypeId) {
         $mood = array_rand(self::$MOOD_ARRAY[$feelingTypeId]);
         $url = Config::get("gracenote_api") . $mood;
-        $gracenoteJson = file_get_contents($url, "r");
+        $conn = curl_init();
+        curl_setopt($conn, CURLOPT_URL, $url);
+        curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($conn, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($conn, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($conn, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($conn, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($conn, CURLOPT_HEADER, false);
+        $gracenoteJson = curl_exec($conn);
+        curl_close($conn);
+//        $gracenoteJson = file_get_contents($url, "r");
 
         $tmp = json_decode($gracenoteJson)->RESPONSE;
         $gracenoteArray['RESPONSE'] = $tmp[0];

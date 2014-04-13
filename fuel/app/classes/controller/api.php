@@ -80,7 +80,6 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
         $feelingClass = Gomez_Feeling::getInstance();
         $feelingTypeId = $feelingClass->kuji(115, -27);
-        echo $feelingTypeId."<br>\n";
 
         $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
         $youtubeJson = null;
@@ -105,7 +104,7 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             'feeling_type_id' => $feelingTypeId,
             'youtube_json' => $youtubeJson,
         );
-        echo "<pre>";
-        print_r($data);
+
+        var_dump($data);
     }
 }
