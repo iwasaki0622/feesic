@@ -39,21 +39,16 @@
                         <div class="three columns image circle">
 						<?php echo Asset::img("user001.jpg"); ?>
                         </div>
-                        <div class="five columns">
+                        <div class="nine columns">
                             <h4 class="lead">リード</h4>
                             <ul class="square">
-                                <li>今の想い</li>
-                                <li>List item</li>
-                                <li>List item</li>
+                                <li id="feel-type"></li>
                             </ul>
+                            <div id="youtube"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-		<div class="row">
-            <h2>Userさんの想い</h2>
-            <div id="youtube"></div>
-		</div>
 	</div>
