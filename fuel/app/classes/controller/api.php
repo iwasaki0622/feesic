@@ -81,15 +81,26 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
         $feelingClass = Gomez_Feeling::getInstance();
         $feelingTypeId = $feelingClass->kuji(115, -27);
 
-        $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
-        $youtubeJson = null;
-        $gracenoteData = $gracenoteResponse['RESPONSE'];
+        do {
+            $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
+            $gracenoteData = $gracenoteResponse['RESPONSE'];
+
+            if(isset($gracenoteData->STATUS) && $gracenoteData->STATUS == "NO_MATCH") {
+
+            } else {
+                break;
+            }
+        } while(true);
+
         foreach((array)$gracenoteData->ALBUM as $data) {
             $song = $data->TITLE;
             $songName = $song[0]->VALUE;
 
+//            $songName = Gomez_Feeling::wada($songName);
+
             $artist = $data->ARTIST;
             $artistName = $artist[0]->VALUE;
+//            $artistName = Gomez_Feeling::wada($artistName);
 
             $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
 
@@ -105,6 +116,6 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             'youtube_json' => $youtubeJson,
         );
 
-        var_dump($data);
+        print_r($data);
     }
 }
