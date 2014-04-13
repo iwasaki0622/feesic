@@ -68,17 +68,17 @@ class Gomez_Feeling {
         }
         else if($motion > 50 && $sound > 50) {
 
-            return $feeling[1]['feeling_type_id'];;	//怒
+            return $feeling[1]['feeling_type_id'];	//怒
 
         }
         else if($motion <= 50 && $sound <= 50) {
 
-            return $feeling[2]['feeling_type_id'];;	//哀
+            return $feeling[2]['feeling_type_id'];	//哀
 
         }
         else if($motion > 50 && $sound <= 50) {
 
-            return $feeling[3]['feeling_type_id'];;	//楽
+            return $feeling[3]['feeling_type_id'];	//楽
 
         }
 
