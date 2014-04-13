@@ -56,21 +56,12 @@ class Gomez_Feeling {
     );
 
     private static $GENRE_ARRAY = array(
-        27745,
-        27800,
-        35625,
         35627,
         35628,
-        27710,
+        35627,
+        27745,
         27960,
-        27790,
-        27850,
-        27854,
-        27855,
-        27857,
-        27858,
-        35659,
-
+        27710,
     );
 
     /**
@@ -122,8 +113,9 @@ class Gomez_Feeling {
      * @return string
      */
     static function murton($feelingTypeId) {
-        $mood = array_rand(self::$MOOD_ARRAY[$feelingTypeId]);
-        $url = Config::get("gracenote_api") . "mood=" . $mood . "&genre=". array_rand(self::$GENRE_ARRAY);
+        $mood = self::$MOOD_ARRAY[$feelingTypeId][count(self::$MOOD_ARRAY[$feelingTypeId]) - 1];
+        $genre = self::$GENRE_ARRAY[count(self::$GENRE_ARRAY)- 1];
+        $url = Config::get("gracenote_api") . "mood=" . $mood . "&genre=". $genre;
         $conn = curl_init();
         curl_setopt($conn, CURLOPT_URL, $url);
         curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, false);
@@ -153,7 +145,6 @@ class Gomez_Feeling {
      * @return string
      */
     static function fukudome($songName) {
-
         //スペースは+に変える
         $songName = str_replace(" ", "+", $songName);
 
@@ -164,6 +155,9 @@ class Gomez_Feeling {
         $totalItems = $res->data->totalItems;
 
         if($totalItems !== 0) {
+//            $items = (array)$res->data->items;
+//            echo '<a href="' . $items[0]->player->default . '" target="_blank">' . $items[0]->player->default . "</a><br><hr><br>";
+
             return $youtubeJson;
         } else {
             return null;

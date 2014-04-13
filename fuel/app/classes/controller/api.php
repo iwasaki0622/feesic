@@ -91,37 +91,39 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
 
         $feelingClass = Gomez_Feeling::getInstance();
         $feelingTypeId = $feelingClass->kuji(115, -27);
+        $feelingTypeId = 4;
 
-        do {
-            $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
-            $gracenoteData = $gracenoteResponse['RESPONSE'];
+        for($i = 0; $i < 5;$i++) {
+            do {
+                $gracenoteResponse = Gomez_Feeling::murton($feelingTypeId);
+                $gracenoteData = $gracenoteResponse['RESPONSE'];
 
-            if(isset($gracenoteData->STATUS) && $gracenoteData->STATUS == "NO_MATCH") {
+                if(isset($gracenoteData->STATUS) && $gracenoteData->STATUS == "NO_MATCH") {
 
-            } else {
-                break;
-            }
-        } while(true);
+                } else {
+                    break;
+                }
+            } while(true);
 
-        foreach((array)$gracenoteData->ALBUM as $data) {
-            $song = $data->TITLE;
-            $songName = $song[0]->VALUE;
+            foreach((array)$gracenoteData->ALBUM as $data) {
+                $track = (array)$data->TRACK;
+                $song = $track[0]->TITLE;
+                $songName = $song[0]->VALUE;
 
 //            $songName = Gomez_Feeling::wada($songName);
 
-            $artist = $data->ARTIST;
-            $artistName = $artist[0]->VALUE;
+                $artist = $data->ARTIST;
+                $artistName = $artist[0]->VALUE;
 //            $artistName = Gomez_Feeling::wada($artistName);
 
-            $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
+                echo $songName."(" . $artistName . ")<br>";
+                $youtubeJson = Gomez_Feeling::fukudome($songName . " " . $artistName);
 
-            if(!empty($youtubeJson)) {
-                echo $songName."<br>";
-                echo $artistName."<br>";
-                break;
+                if(!empty($youtubeJson)) {
+                    break;
+                }
             }
         }
-
         $data = array(
             'uid' => "",
             'gracenote_json' => $gracenoteResponse['JSON'],
@@ -129,6 +131,6 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
             'youtube_json' => $youtubeJson,
         );
 
-        print_r($data);
+
     }
 }
