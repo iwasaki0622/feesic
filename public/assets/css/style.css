@@ -1,0 +1,20 @@
+/*
+We highly recommend you use SASS and write your custom styles in sass/_custom.scss.
+However, this blank file is available if you prefer
+*/
+#hero {
+    background: url("/img/hero.jpg") center right;
+    margin: 0;
+/* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+  /* Set up positioning */
+  position: fixed;
+  /* またはabsolute; */
+  top: 0;
+  left: 0;
+    
+}
