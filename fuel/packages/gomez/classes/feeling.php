@@ -149,7 +149,7 @@ class Gomez_Feeling {
         curl_close($conn);
 
         $gracenoteArray['RESPONSE'] = $gracenoteJson->RESPONSE[0];
-        $gracenoteArray['JSON'] = $gracenoteJson;
+        $gracenoteArray['JSON'] = json_encode($gracenoteJson);
 
         return $gracenoteArray;
     }

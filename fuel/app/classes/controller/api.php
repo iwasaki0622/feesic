@@ -56,7 +56,7 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
                 break;
             }
         } while(true);
-        
+
         $youtubeJson = null;
         $gracenoteData = $gracenoteResponse['RESPONSE'];
         foreach((array)$gracenoteData->ALBUM as $data) {
