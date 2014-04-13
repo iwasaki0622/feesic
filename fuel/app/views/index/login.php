@@ -1,6 +1,7 @@
-<div id="hero">
 	<div class="row">
-		<h1 class="lead">feesic</h1>
+        <h1 class="lead">
+            <?php echo Asset::img("logo.png", array("width" => "600")); ?>
+        </h1>
 		<div class="row">
 			<div class="four columns">
 			</div>
@@ -26,4 +27,3 @@
 			</div>
 		</div>
     </div>
-</div>

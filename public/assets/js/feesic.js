@@ -48,24 +48,30 @@ function Feesic()
                 var track = new Array(obj.data.items[0].id);
                 var feeling = "";
                 var feeling_type_id = data.feeling_type_id;
+                var img = null;
                 switch(feeling_type_id) {
                     case "1": 
                         feeling = "喜んでいます"; 
                         feeling_description = "嬉しそうに声をあげています。";
+                        img = "ki.jpg";
                         break;
                     case "2": 
                         feeling = "怒っています"; 
                         feeling_description = "声をあげてジタバタと動いています。";
+                        img = "do.jpg";
                         break;
                     case "3": 
                         feeling = "悲しんでいます"; 
                         feeling_description = "声も動きも少なく哀しそうです。";
+                        img = "ai.jpg";
                         break;
                     case "4": 
                         feeling = "楽しんでいます"; 
                         feeling_description = "楽しそうに動きまわっています。";
+                        img = "raku.jpg";
                         break;
                 }
+                $("img.userImage").attr("src","/assets/img/"+img);
                 $("#feel-type").text(feeling);
                 $("#feel-type-description").text(feeling_description);
                 self.ytplayer.setTrack(track);

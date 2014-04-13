@@ -49,12 +49,6 @@ function Player(data)
         }
     }
 
-    // Generate the youtube playlist URI
-    self.generateYouTubeURI = function()
-    {
-        var url = "http://www.youtube.com/embed/" + self.track + "?rel=0&showinfo=1&autoplay=1&enablejsapi=1";
-        return url.substring(0, url.length - 1); // Remove final ","
-    }
     
     self.pauseVideo = function() {
         self.player.pauseVideo();
