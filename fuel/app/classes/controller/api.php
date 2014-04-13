@@ -16,7 +16,7 @@ class Controller_Api extends \Fuel\Core\Controller_Rest
     public function post_index()
     {
 
-        $uid = "fu-ji-na-mi";
+        $uid = Input::post('uid');
 
         //動き
         $motion = Input::post('motion');
