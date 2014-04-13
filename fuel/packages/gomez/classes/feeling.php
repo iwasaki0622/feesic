@@ -106,8 +106,8 @@ class Gomez_Feeling {
      * @return string
      */
     static function murton($feelingTypeId) {
-        $mood = self::$MOOD_ARRAY[$feelingTypeId][count(self::$MOOD_ARRAY[$feelingTypeId]) - 1];
-        $genre = self::$GENRE_ARRAY[count(self::$GENRE_ARRAY)- 1];
+        $mood = self::$MOOD_ARRAY[$feelingTypeId][rand(0, count(self::$MOOD_ARRAY[$feelingTypeId]) - 1)];
+        $genre = self::$GENRE_ARRAY[rand(0, count(self::$GENRE_ARRAY)- 1)];
         $url = Config::get("gracenote_api") . "mood=" . $mood . "&genre=". $genre;
         $conn = curl_init();
         curl_setopt($conn, CURLOPT_URL, $url);
